@@ -1,27 +1,38 @@
-const firebaseConfig = {
-  apiKey: "AIzaSyADJL_wvtVpwoaRgy0Mr_QTm-O-p0pwJ04",
-  authDomain: "rgrpuram-family.firebaseapp.com",
-  projectId: "rgrpuram-family",
-  storageBucket: "rgrpuram-family.firebasestorage.app",
-  messagingSenderId: "204335215270",
-  appId: "1:204335215270:web:603e5f4eb431411f703a67"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const storage = firebase.storage();
-
 function uploadPhoto() {
   const file = document.getElementById("file").files[0];
 
-  const ref = storage.ref("photos/" + file.name);
+  if (!file) {
+    alert("Please select file");
+    return;
+  }
 
-  ref.put(file).then(() => {
-    ref.getDownloadURL().then(url => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "Rgrpuram family");
+
+  fetch("https://api.cloudinary.com/v1_1/dwqz24s5hf/image/upload", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log(data);
+
+    if (data.secure_url) {
       const img = document.createElement("img");
-      img.src = url;
-      img.width = 150;
+      img.src = data.secure_url;
+      img.style.width = "150px";
+      img.style.margin = "10px";
+
       document.getElementById("photos").appendChild(img);
-    });
+
+      alert("Upload success ✅");
+    } else {
+      alert("Upload failed ❌");
+    }
+  })
+  .catch(err => {
+    console.log(err);
+    alert("Error ❌");
   });
 }
