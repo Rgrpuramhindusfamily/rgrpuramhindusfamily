@@ -8,7 +8,7 @@ function uploadPhoto() {
 
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("upload_preset", "temple_upload");
+  formData.append("upload_preset", "temple_upload"); // 👈 exact name
 
   fetch("https://api.cloudinary.com/v1_1/dwqz24s5hf/image/upload", {
     method: "POST",
@@ -22,7 +22,6 @@ function uploadPhoto() {
       const img = document.createElement("img");
       img.src = data.secure_url;
       img.style.width = "150px";
-      img.style.margin = "10px";
 
       document.getElementById("photos").appendChild(img);
 
