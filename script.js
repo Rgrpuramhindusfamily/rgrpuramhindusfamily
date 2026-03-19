@@ -8,7 +8,7 @@ function uploadPhoto() {
 
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("upload_preset", "Rgrpuram family");
+  formData.append("upload_preset", "temple_upload");
 
   fetch("https://api.cloudinary.com/v1_1/dwqz24s5hf/image/upload", {
     method: "POST",
