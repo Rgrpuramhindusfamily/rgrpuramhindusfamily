@@ -1,54 +1,52 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="te">
 <head>
-  <title> Rgrpuram Hindus Family
-    🙏 రాఘవరాజపురం హిందూ కుటుంబానికి స్వాగతం 🙏</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial;
-      margin: 0;
-      background-color: #f5f5f5;
-    }
-    header {
-      background: orange;
-      color: white;
-      padding: 15px;
-      text-align: center;
-    }
-    nav {
-      background: #333;
-      padding: 10px;
-      text-align: center;
-    }
-    nav a {
-      color: white;
-      margin: 10px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    section {
-      padding: 20px;
-      background: white;
-      margin: 10px;
-      border-radius: 10px;
-    }
-    img {
-      width: 300px;
-      margin: 10px;
-      border-radius: 10px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>రాఘవరాజపురం హిందూ కుటుంబం</title>
+
+<style>
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #f5f5f5;
+}
+
+header {
+  background: orange;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+
+section {
+  background: white;
+  margin: 10px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+button {
+  padding: 10px;
+  margin: 5px;
+  background: orange;
+  color: white;
+  border: none;
+}
+
+img {
+  width: 150px;
+  margin: 5px;
+  border-radius: 10px;
+}
+</style>
+
 </head>
 
 <body>
 
 <header>
-  <h1>🙏 రాఘవరాజపురం హిందూ కుటుంబానికి స్వాగతం 🙏</h1>
-  <p>Temple Events Photos Donations & Community</p>
+<h1>🙏 రాఘవరాజపురం హిందూ కుటుంబానికి స్వాగతం 🙏</h1>
 </header>
-
 <nav>
   <a href="#year">Year</a>
   <a href="#festival">Festivals</a>
@@ -58,89 +56,98 @@
   <a href="#bills">Bills</a>
 </nav>
 
-<section id="year">
-  <h2>📅 Year Events</h2>
+<!-- YEAR -->
+<section>
+<h2>Select Year</h2>
+<button onclick="loadFestivals('2025')">2025</button>
+<button onclick="loadFestivals('2024')">2026</button>
+</section>
 
-  <!-- Dropdown -->
-  <select onchange="showYear(this.value)">
-    <option value="2026">2026</option>
-    <option value="2025">2025</option>
-    <option value="2024">2024</option>
-  </select>
+<!-- FESTIVALS -->
+<section>
+<h2>Festivals</h2>
+<div id="festivals"></div>
+</section>
 
-  <!-- Content -->
-  <div id="yearContent" style="margin-top:15px;">
-    <p>2026 Temple Activities and updates</p>
-  </div>
+<!-- PHOTOS -->
+<section>
+<h2>Photos</h2>
+<div id="photos"></div>
+</section>
+
+<!-- DONATIONS -->
+<section>
+<h2>Donations</h2>
+<ul>
+<li>AAA - ₹500</li>
+<li>BBB - ₹1000</li>
+</ul>
+</section>
+
+<!-- BILLS -->
+<section>
+<h2>Bills</h2>
+<ul>
+<li>Lights - ₹300</li>
+<li>Decoration - ₹700</li>
+<li>Speakers - ₹1000</li>
+</ul>
+</section>
+
+<!-- FAMILIES -->
+<section>
+<h2>Families</h2>
+<ul>
+<li>Family 1</li>
+<li>Family 2</li>
+<li>Family 3</li>
+</ul>
 </section>
 
 <script>
-function showYear(year) {
-  let content = "";
 
-  if(year == "2026") {
-    content = "2026 ";
-  } 
-  else if(year == "2025") {
-    content = "2025 ";
-  } 
-  else if(year == "2024") {
-    content = "2024 - ";
+const data = {
+  "2025": {
+    "Sankranthi": [
+      "images/2025/sankranthi/pongal26.jpeg",
+      "images/2025/sankranthi/img2.jpg"
+    ], 
+    "Vinayaka": [
+      "images/2025/vinayaka/img1.jpg"
+      "images/2025/vinayaka/img2.jpg"
+      "images/2025/vinayaka/img3.jpeg"
+      "images/2025/vinayaka/img4.jpeg"
+      "images/2025/vinayaka/img5.jpeg"
+    ]
   }
+};
 
-  document.getElementById("yearContent").innerHTML = content;
+function loadFestivals(year) {
+  const div = document.getElementById("festivals");
+  div.innerHTML = "";
+
+  Object.keys(data[year]).forEach(fest => {
+    const btn = document.createElement("button");
+    btn.innerText = fest;
+    btn.onclick = () => loadPhotos(year, fest);
+    div.appendChild(btn);
+  });
 }
+
+function loadPhotos(year, fest) {
+  const div = document.getElementById("photos");
+  div.innerHTML = "";
+
+  data[year][fest].forEach(imgPath => {
+    const img = document.createElement("img");
+    img.src = imgPath;
+    div.appendChild(img);
+  });
+}
+  loadFestivals("2025");
+
 </script>
-
-<section id="festival">
-  <h2>Festivals</h2>
-  <p>Ugadi, Sankranti, Dasara celebrations</p>
-</section>
-
-<section id="photos">
-  <h2>Photos</h2>
-  <img src="https://via.placeholder.com/300">
-</section>
-
-<section id="videos">
-  <h2>Videos</h2>
-  <iframe width="300" height="200"
-    src="http://youtube.com/watch?v=mGdWrMdu53M&list=RDmGdWrMdu53M&start_radio=1">
-  </iframe>
-</section>
-
-<section id="donations">
-  <h2>Donations</h2>
-
-  <p><b>UPI ID:</b> yourupi@bank</p>
-
-  <!-- UPI Pay Button -->
-  <a href="upi://pay?pa=yourupi@bank&pn=Temple&cu=INR">
-    <button>Pay via UPI</button>
-  </a>
-
-  <hr>
-
-  <!-- Donation Form -->
-  <h3>Enter Donation Details</h3>
-
-  <input type="text" id="name" placeholder="Your Name"><br><br>
-  <input type="number" id="amount" placeholder="Amount"><br><br>
-
-  <button onclick="addDonation()">Submit</button>
-
-  <hr>
-
-  <!-- Donations List -->
-  <h3>Donations List</h3>
-  <ul id="donationList"></ul>
-
-</section>
-
-<section id="bills">
-  <h2>Bills & Debits</h2>
-  <p>Expenses details will be updated</p>
-</section>
 
 </body>
 </html>
+
