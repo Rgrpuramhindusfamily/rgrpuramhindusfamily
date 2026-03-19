@@ -1,10 +1,10 @@
 const firebaseConfig = {
-  apiKey: "PASTE_HERE",
-  authDomain: "PASTE_HERE",
-  projectId: "PASTE_HERE",
-  storageBucket: "PASTE_HERE",
-  messagingSenderId: "PASTE_HERE",
-  appId: "PASTE_HERE"
+  apiKey: "AIzaSyADJL_wvtVpwoaRgy0Mr_QTm-O-p0pwJ04",
+  authDomain: "rgrpuram-family.firebaseapp.com",
+  projectId: "rgrpuram-family",
+  storageBucket: "rgrpuram-family.firebasestorage.app",
+  messagingSenderId: "204335215270",
+  appId: "1:204335215270:web:603e5f4eb431411f703a67"
 };
 
 firebase.initializeApp(firebaseConfig);
