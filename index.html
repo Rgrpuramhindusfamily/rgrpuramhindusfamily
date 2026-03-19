@@ -45,7 +45,7 @@
 
 <header>
   <h1>🙏 రాఘవరాజపురం హిందూ కుటుంబానికి స్వాగతం 🙏</h1>
-  <p>Temple Events, Photos, Donations & Community</p>
+  <p>Temple Events Photos Donations & Community</p>
 </header>
 
 <nav>
@@ -58,9 +58,38 @@
 </nav>
 
 <section id="year">
-  <h2>Year-wise Events</h2>
-  <p>2026 - Temple Festival details here</p>
+  <h2>📅 Year Events</h2>
+
+  <!-- Dropdown -->
+  <select onchange="showYear(this.value)">
+    <option value="2026">2026</option>
+    <option value="2025">2025</option>
+    <option value="2024">2024</option>
+  </select>
+
+  <!-- Content -->
+  <div id="yearContent" style="margin-top:15px;">
+    <p>2026 Temple Activities and updates</p>
+  </div>
 </section>
+
+<script>
+function showYear(year) {
+  let content = "";
+
+  if(year == "2026") {
+    content = "2026 - Ugadi, Ram Navami celebrations";
+  } 
+  else if(year == "2025") {
+    content = "2025 - Sankranti, Dasara events";
+  } 
+  else if(year == "2024") {
+    content = "2024 - Temple renovation activities";
+  }
+
+  document.getElementById("yearContent").innerHTML = content;
+}
+</script>
 
 <section id="festival">
   <h2>Festivals</h2>
