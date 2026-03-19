@@ -104,13 +104,36 @@ function showYear(year) {
 <section id="videos">
   <h2>Videos</h2>
   <iframe width="300" height="200"
-    src="https://www.youtube.com/embed/tgbNymZ7vqY">
+    src="http://youtube.com/watch?v=mGdWrMdu53M&list=RDmGdWrMdu53M&start_radio=1">
   </iframe>
 </section>
 
 <section id="donations">
   <h2>Donations</h2>
-  <p>UPI: yourupi@bank</p>
+
+  <p><b>UPI ID:</b> yourupi@bank</p>
+
+  <!-- UPI Pay Button -->
+  <a href="upi://pay?pa=yourupi@bank&pn=Temple&cu=INR">
+    <button>Pay via UPI</button>
+  </a>
+
+  <hr>
+
+  <!-- Donation Form -->
+  <h3>Enter Donation Details</h3>
+
+  <input type="text" id="name" placeholder="Your Name"><br><br>
+  <input type="number" id="amount" placeholder="Amount"><br><br>
+
+  <button onclick="addDonation()">Submit</button>
+
+  <hr>
+
+  <!-- Donations List -->
+  <h3>Donations List</h3>
+  <ul id="donationList"></ul>
+
 </section>
 
 <section id="bills">
