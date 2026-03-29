@@ -28,3 +28,9 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.card p {
+  margin:5px 0 0;
+  font-size:14px;
+  font-weight:bold;
+}
