@@ -2,7 +2,7 @@
 <html lang="te">
 <head>
 <meta charset="UTF-8">
-<title>రాఘవరాజపురం హిందూ కుటుంబం</title>
+<title>రాఘవరాజపురం</title>
 
 <style>
 body {
@@ -11,182 +11,158 @@ body {
   background: #f5f5f5;
 }
 
+/* HEADER */
 header {
   background: orange;
   color: white;
   text-align: center;
   padding: 15px;
+  font-size: 22px;
 }
 
-section {
-  background: white;
-  margin: 10px;
-  padding: 15px;
-  border-radius: 10px;
-}
-
-button {
+/* NAVBAR */
+nav {
+  background: #ddd;
   padding: 10px;
-  margin: 5px;
-  background: orange;
+  text-align: center;
+}
+
+nav a {
+  margin: 10px;
+  font-weight: bold;
+  color: blue;
+  text-decoration: none;
+}
+
+/* SECTIONS */
+section {
+  margin: 10px;
+}
+
+/* GRID DESIGN (IMAGE LAANTI) */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+/* CARD */
+.card {
+  background: white;
+  border-radius: 8px;
+  text-align: center;
+  padding: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.card p {
+  font-size: 12px;
+  margin: 5px 0;
+}
+
+/* CATEGORY BOX */
+.category {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
   color: white;
-  border: none;
+  height: 100px;
+  border-radius: 8px;
 }
 
-img {
-  width: 150px;
-  margin: 5px;
-  border-radius: 10px;
-}
+.fellow { background: orange; }
+.master { background: skyblue; }
+.architect { background: #1976d2; }
+.tech { background: #ff7043; }
+
 </style>
-
 </head>
 
 <body>
 
 <header>
-<h1>🙏 రాఘవరాజపురం హిందూ కుటుంబానికి స్వాగతం 🙏</h1>
+🙏 రాఘవరాజపురం హిందూ కుటుంబానికి స్వాగతం 🙏
 </header>
-  
+
 <nav>
-  <a href="#year">Year</a>
-  <a href="#festival">Festivals</a>
-  <a href="#photos">Photos</a>
-  <a href="#videos">Videos</a>
-  <a href="#donations">Donations</a>
-  <a href="#bills">Bills</a>
+<a href="#">Year</a>
+<a href="#">Festivals</a>
+<a href="#">Photos</a>
+<a href="#">Videos</a>
+<a href="#">Donations</a>
+<a href="#">Bills</a>
 </nav>
 
-<!-- YEAR -->
+<!-- TOP CONTENT -->
 <section>
-<h2>Select Year</h2>
-<button onclick="loadFestivals('2025')">2025</button>
-<button onclick="loadFestivals('2026')">2026</button>
+<h3>Select Year</h3>
+<button onclick="loadPhotos()">Load Photos</button>
 </section>
 
-<!-- FESTIVALS -->
+<!-- BOTTOM GRID (MAIN UI) -->
 <section>
-<h2>Festivals</h2>
-<div id="festivals"></div>
-</section>
-
-<!-- PHOTOS -->
-<section>
-<h2>Photos</h2>
-<div id="photos"></div>
-</section>
-
-<!-- DONATIONS -->
-<section>
-<h2>Donations</h2>
-<ul>
-<li>AAA - ₹500</li>
-<li>BBB - ₹1000</li>
-</ul>
-</section>
-
-<!-- BILLS -->
-<section>
-<h2>Bills</h2>
-<ul>
-<li>Lights - ₹300</li>
-<li>Decoration - ₹700</li>
-<li>Speakers - ₹1000</li>
-</ul>
-</section>
-
-<!-- FAMILIES -->
-<section>
-<h2>Families</h2>
-<ul>
-<li>Family 1</li>
-<li>Family 2</li>
-<li>Family 3</li>
-</ul>
+<div id="photos" class="grid"></div>
 </section>
 
 <script>
 
-const data = {
-  "2025": {
-    "Sankranthi": [
-      "images/2025/sankranthi/pongal26.jpeg",
-      "images/2025/sankranthi/img2.jpg"
-    ], 
-    "Vinayaka": [
-      "images/2025/vinayaka/img1.jpg",
-      "images/2025/vinayaka/img2.jpg",
-      "images/2025/vinayaka/img3.jpeg",
-      "images/2025/vinayaka/img4.jpeg",
-      "images/2025/vinayaka/img5.jpeg"
-    ] ,
-    "Jathara": [
-      "images/2025/jathara/img1.jpg",
-      "images/2025/jathara/img2.jpg"
-    ],
-    "Thirunal": [
-      "images/2025/thirunal/img1.jpg",
-      "images/2025/thirunal/img2.jpg"
-    ],
+function loadPhotos() {
 
-    "Shivarathri": [
-      "images/2025/shivarathri/img1.jpg",
-      "images/2025/shivarathri/img2.jpg"
-    ]
-  },
-
-  "2026": {
-    "Sankranthi": [
-      "images/2026/sankranthi/img1.jpg",
-      "images/2026/sankranthi/img2.jpg"
-    ],
-
-    "Vinayaka": [
-      "images/2026/vinayaka/img1.jpg",
-      "images/2026/vinayaka/img2.jpg"
-    ],
-
-    "Jathara": [
-      "images/2026/jathara/img1.jpg",
-      "images/2026/jathara/img2.jpg"
-    ],
-
-    "Thirunal": [
-      "images/2026/thirunal/img1.jpg",
-      "images/2026/thirunal/img2.jpg"
-    ],
-
-    "Shivarathri": [
-      "images/2026/shivarathri/img1.jpg",
-      "images/2026/shivarathri/img2.jpg"
-    ]
-  
-  }
-};
-
-function loadFestivals(year) {
-  const div = document.getElementById("festivals");
-  div.innerHTML = "";
-
-  Object.keys(data[year]).forEach(fest => {
-    const btn = document.createElement("button");
-    btn.innerText = fest;
-    btn.onclick = () => loadPhotos(year, fest);
-    div.appendChild(btn);
-  });
-}
-
-function loadPhotos(year, fest) {
   const div = document.getElementById("photos");
   div.innerHTML = "";
 
-  data[year][fest].forEach(imgPath => {
-    const img = document.createElement("img");
-    img.src = imgPath;
-    div.appendChild(img);
+  const items = [
+
+    {type:"cat", text:"FELLOW", class:"fellow"},
+    {img:"images/p1.jpg", name:"Person 1"},
+    {img:"images/p2.jpg", name:"Person 2"},
+    {type:"cat", text:"ARCHITECT", class:"architect"},
+
+    {type:"cat", text:"MASTERS", class:"master"},
+    {img:"images/p3.jpg", name:"Person 3"},
+    {img:"images/p4.jpg", name:"Person 4"},
+
+    {img:"images/p5.jpg", name:"Person 5"},
+    {img:"images/p6.jpg", name:"Person 6"},
+    {img:"images/p7.jpg", name:"Person 7"},
+    {img:"images/p8.jpg", name:"Person 8"},
+
+  ];
+
+  items.forEach(item => {
+
+    const card = document.createElement("div");
+
+    if(item.type === "cat") {
+      card.className = "category " + item.class;
+      card.innerText = item.text;
+    } else {
+      card.className = "card";
+
+      const img = document.createElement("img");
+      img.src = item.img;
+
+      const name = document.createElement("p");
+      name.innerText = item.name;
+
+      card.appendChild(img);
+      card.appendChild(name);
+    }
+
+    div.appendChild(card);
+
   });
+
 }
-  
+
 </script>
 
 </body>
