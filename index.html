@@ -2,70 +2,88 @@
 <html lang="te">
 <head>
 <meta charset="UTF-8">
-<title>Temple Website</title>
+<title>Temple UI</title>
 
 <style>
-body {
-  font-family: Arial;
-  margin: 0;
-  background: #f5f5f5;
-}
+body { font-family: Arial; margin:0; background:#eee; }
 
 /* HEADER */
 header {
   background: orange;
-  color: white;
-  text-align: center;
-  padding: 15px;
-  font-size: 22px;
+  color:white;
+  text-align:center;
+  padding:15px;
+  font-size:22px;
 }
 
-/* NAVBAR */
+/* NAV */
 nav {
-  background: #ddd;
-  text-align: center;
-  padding: 10px;
+  background:#ccc;
+  text-align:center;
+  padding:10px;
 }
-
 nav a {
-  margin: 10px;
-  color: blue;
-  font-weight: bold;
-  text-decoration: none;
+  margin:10px;
+  color:blue;
+  font-weight:bold;
 }
 
-/* CONTAINER */
-.container {
-  padding: 10px;
+/* MAIN LAYOUT */
+.main {
+  display:flex;
+}
+
+/* LEFT PANEL */
+.left {
+  width:250px;
+  padding:10px;
+}
+
+/* RIGHT PANEL */
+.right {
+  flex:1;
+  padding:10px;
 }
 
 /* GRID */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 10px;
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px,1fr));
+  gap:10px;
 }
 
 /* CARD */
 .card {
-  background: white;
-  padding: 5px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background:white;
+  padding:5px;
+  border-radius:10px;
+  text-align:center;
 }
 
-.card img, video {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 8px;
+.card img {
+  width:100%;
+  height:100px;
+  object-fit:cover;
+  border-radius:8px;
 }
 
-select {
-  padding: 8px;
-  margin: 5px;
+.category {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  font-weight:bold;
+  height:100px;
+  border-radius:10px;
 }
+
+.fellow { background:orange; }
+.master { background:skyblue; }
+.architect { background:#1976d2; }
+.tech { background:#ff7043; }
+
+select { padding:5px; margin:5px; }
+
 </style>
 </head>
 
@@ -76,37 +94,29 @@ select {
 </header>
 
 <nav>
-<a href="#">Year</a>
-<a href="#">Festivals</a>
-<a href="#">Families</a>
-<a href="#">Photos</a>
-<a href="#">Videos</a>
-<a href="#">Donations</a>
-<a href="#">Bills</a>
+<a>Year</a>
+<a>Festivals</a>
+<a>Photos</a>
+<a>Videos</a>
+<a>Donations</a>
+<a>Bills</a>
 </nav>
 
-<div class="container">
+<div class="main">
+
+<!-- LEFT SIDE -->
+<div class="left">
 
 <h3>Select Year</h3>
 
 <select id="year" onchange="loadFestivals()">
-  <option value="">Select Year</option>
-  <option value="2025">2025</option>
-  <option value="2026">2026</option>
+<option value="2025">2025</option>
+<option value="2026">2026</option>
 </select>
 
-<select id="festival" onchange="loadAllData()">
-  <option value="">Select Festival</option>
+<select id="festival" onchange="loadData()">
+<option>Select Festival</option>
 </select>
-
-<h3>Photos</h3>
-<div id="photos" class="grid"></div>
-  
-<h3>Photos</h3>
-<div id="photos" class="grid"></div>
-
-<h3>Videos</h3>
-<div id="videos" class="grid"></div>
 
 <h3>Donations</h3>
 <ul id="donations"></ul>
@@ -116,144 +126,118 @@ select {
 
 </div>
 
+<!-- RIGHT SIDE -->
+<div class="right">
+<div id="grid" class="grid"></div>
+</div>
+
+</div>
+
 <script>
 
 /* 🔥 MAIN DATA */
 const data = {
 
-  "2025": {
-    "Sankranthi": {
-      photos: [
-        "images/2025/sankranthi/img1.jpg",
-        "images/2025/sankranthi/img2.jpg"
-      ],
-      videos: [
-        "videos/2025/sankranthi/v1.mp4"
-      ],
-      donations: [
-        "Ravi - ₹500",
-        "Suresh - ₹1000"
-      ],
-      bills: [
-        "Lights - ₹300",
-        "Sound - ₹500"
-      ]
-    },
+"2025": {
+  "Vinayaka": {
+    items: [
 
-    "Vinayaka": {
-      photos: [
-        "images/2025/vinayaka/img1.jpg"
-      ],
-      videos: [],
-      donations: [
-        "Ramesh - ₹700"
-      ],
-      bills: [
-        "Decoration - ₹800"
-      ]
-    }
-  },
+      {type:"cat", text:"FELLOW", class:"fellow"},
 
-  "2026": {
-    "Sankranthi": {
-      photos: [
-        "images/2026/sankranthi/img1.jpg"
-      ],
-      videos: [],
-      donations: [
-        "Kiran - ₹900"
-      ],
-      bills: [
-        "Lights - ₹400"
-      ]
-    }
-  }
+      {img:"images/p1.jpg", name:"Person 1"},
+      {img:"images/p2.jpg", name:"Person 2"},
 
-};
+      {type:"cat", text:"ARCHITECT", class:"architect"},
+      {type:"cat", text:"MASTERS", class:"master"},
 
-/* 🔹 LOAD FESTIVALS */
-function loadFestivals() {
-  const year = document.getElementById("year").value;
-  const festDropdown = document.getElementById("festival");
+      {img:"images/p3.jpg", name:"Person 3"},
+      {img:"images/p4.jpg", name:"Person 4"},
+      {img:"images/p5.jpg", name:"Person 5"},
+      {img:"images/p6.jpg", name:"Person 6"},
+      {img:"images/p7.jpg", name:"Person 7"},
+      {img:"images/p8.jpg", name:"Person 8"}
 
-  festDropdown.innerHTML = "<option>Select Festival</option>";
-
-  if(data[year]) {
-    Object.keys(data[year]).forEach(f => {
-      let opt = document.createElement("option");
-      opt.value = f;
-      opt.text = f;
-      festDropdown.appendChild(opt);
-    });
+    ],
+    donations:["Ramesh - ₹700"],
+    bills:["Decoration - ₹800"]
   }
 }
 
-/* 🔹 LOAD ALL DATA */
-function loadAllData() {
+};
+
+/* LOAD FESTIVALS */
+function loadFestivals() {
+  const year = document.getElementById("year").value;
+  const fest = document.getElementById("festival");
+
+  fest.innerHTML = "";
+
+  Object.keys(data[year]).forEach(f=>{
+    let opt = document.createElement("option");
+    opt.value = f;
+    opt.text = f;
+    fest.appendChild(opt);
+  });
+
+  loadData();
+}
+
+/* LOAD DATA */
+function loadData() {
 
   const year = document.getElementById("year").value;
   const fest = document.getElementById("festival").value;
 
-  if(!data[year] || !data[year][fest]) return;
-
   const d = data[year][fest];
 
-  /* PHOTOS */
-  const photoDiv = document.getElementById("photos");
-  photoDiv.innerHTML = "";
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
 
-  d.photos.forEach(p => {
-    let img = document.createElement("img");
-    img.src = p;
+  d.items.forEach(item=>{
 
-    let card = document.createElement("div");
-    card.className = "card";
-    card.appendChild(img);
+    const div = document.createElement("div");
 
-    photoDiv.appendChild(card);
-  });
+    if(item.type==="cat"){
+      div.className="category "+item.class;
+      div.innerText=item.text;
+    } else {
+      div.className="card";
 
-  /* VIDEOS */
-  const videoDiv = document.getElementById("videos");
-  videoDiv.innerHTML = "";
+      const img = document.createElement("img");
+      img.src = item.img;
 
-  d.videos.forEach(v => {
-    let vid = document.createElement("video");
-    vid.src = v;
-    vid.controls = true;
+      const name = document.createElement("p");
+      name.innerText=item.name;
 
-    let card = document.createElement("div");
-    card.className = "card";
-    card.appendChild(vid);
+      div.appendChild(img);
+      div.appendChild(name);
+    }
 
-    videoDiv.appendChild(card);
+    grid.appendChild(div);
   });
 
   /* DONATIONS */
   const don = document.getElementById("donations");
-  don.innerHTML = "";
-
-  d.donations.forEach(x => {
-    let li = document.createElement("li");
-    li.innerText = x;
+  don.innerHTML="";
+  d.donations.forEach(x=>{
+    let li=document.createElement("li");
+    li.innerText=x;
     don.appendChild(li);
   });
 
   /* BILLS */
   const bill = document.getElementById("bills");
-  bill.innerHTML = "";
-
-  d.bills.forEach(x => {
-    let li = document.createElement("li");
-    li.innerText = x;
+  bill.innerHTML="";
+  d.bills.forEach(x=>{
+    let li=document.createElement("li");
+    li.innerText=x;
     bill.appendChild(li);
   });
 
 }
 
-/* 🔹 DEFAULT LOAD */
-window.onload = () => {
-  document.getElementById("year").value = "2025";
+/* DEFAULT LOAD */
+window.onload=()=>{
   loadFestivals();
 };
 
