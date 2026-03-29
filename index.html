@@ -202,27 +202,26 @@ function loadData() {
   const grid = document.getElementById("grid");
   grid.innerHTML = "";
 
-  d.items.forEach(item=>{
+  d.items.forEach(item => {
 
-    const div = document.createElement("div");
+    /* 🔥 CARD CREATE */
+    const card = document.createElement("div");
+    card.className = "card";
 
-    if(item.type==="cat"){
-      div.className="category "+item.class;
-      div.innerText=item.text;
-    } else {
-      div.className="card";
+    /* IMAGE */
+    const img = document.createElement("img");
+    img.src = item.img;
 
-      const img = document.createElement("img");
-      img.src = item.img;
+    /* NAME */
+    const name = document.createElement("p");
+    name.innerText = item.name;
 
-      const name = document.createElement("p");
-      name.innerText=item.name;
+    /* APPEND */
+    card.appendChild(img);
+    card.appendChild(name);
 
-      div.appendChild(img);
-      div.appendChild(name);
-    }
+    grid.appendChild(card);
 
-    grid.appendChild(div);
   });
 
   /* DONATIONS */
@@ -243,6 +242,7 @@ function loadData() {
     bill.appendChild(li);
   });
 
+}
 }
 
 /* DEFAULT LOAD */
