@@ -22,3 +22,9 @@
   object-fit: cover;      /* 🔥 IMPORTANT */
   border-radius: 10px;
 }
+
+.photo_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
