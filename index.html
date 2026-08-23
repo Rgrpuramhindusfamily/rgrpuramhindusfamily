@@ -1,256 +1,506 @@
+```html
 <!DOCTYPE html>
 <html lang="te">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Temple UI</title>
 
 <style>
-body { font-family: Arial; margin:0; background:#eee; }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #eee;
+}
 
 /* HEADER */
 header {
   background: orange;
-  color:white;
-  text-align:center;
-  padding:15px;
-  font-size:22px;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 22px;
 }
 
 /* NAV */
 nav {
-  background:#ccc;
-  text-align:center;
-  padding:10px;
+  background: #ccc;
+  text-align: center;
+  padding: 10px;
 }
+
 nav a {
-  margin:10px;
-  color:blue;
-  font-weight:bold;
+  margin: 10px;
+  color: blue;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 /* MAIN LAYOUT */
 .main {
-  display:flex;
+  display: flex;
+  min-height: calc(100vh - 100px);
 }
 
 /* LEFT PANEL */
 .left {
-  width:250px;
-  padding:10px;
+  width: 250px;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 /* RIGHT PANEL */
 .right {
-  flex:1;
-  padding:10px;
+  flex: 1;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 /* GRID */
 .grid {
-  display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px,1fr));
-  gap:10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
 }
 
 /* CARD */
 .card {
-  background:white;
-  padding:5px;
-  border-radius:10px;
-  text-align:center;
+  background: white;
+  padding: 5px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
 }
 
 .card img {
-  width:100%;
-  height:100px;
-  object-fit:cover;
-  border-radius:8px;
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
 }
 
-.category {
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  color:white;
-  font-weight:bold;
-  height:100px;
-  border-radius:10px;
+.card p {
+  margin: 8px 0;
+  font-weight: bold;
 }
 
-.fellow { background:orange; }
-.master { background:skyblue; }
-.architect { background:#1976d2; }
-.tech { background:#ff7043; }
+/* SELECT */
+select {
+  padding: 8px;
+  margin: 5px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
 
-select { padding:5px; margin:5px; }
+/* HEADINGS */
+.left h3 {
+  margin-bottom: 5px;
+}
 
+/* LISTS */
+ul {
+  padding-left: 20px;
+}
+
+/* MOBILE */
+@media (max-width: 700px) {
+
+  .main {
+    flex-direction: column;
+  }
+
+  .left {
+    width: 100%;
+  }
+
+  .right {
+    width: 100%;
+  }
+
+  nav a {
+    display: inline-block;
+    margin: 5px;
+  }
+}
 </style>
 </head>
 
 <body>
 
 <header>
-🙏 రాఘవరాజపురం హిందూ కుటుంబానికి స్వాగతం 🙏
+  🙏 రాఘవరాజపురం హిందూ కుటుంబానికి స్వాగతం 🙏
 </header>
 
 <nav>
-<a>Families</a>
-<a>Year</a>
-<a>Festivals</a>
-<a>Photos</a>
-<a>Videos</a>
-<a>Donations</a>
-<a>Bills</a>
+  <a>Families</a>
+  <a>Year</a>
+  <a>Festivals</a>
+  <a>Photos</a>
+  <a>Videos</a>
+  <a>Donations</a>
+  <a>Bills</a>
 </nav>
 
 <div class="main">
 
-<!-- LEFT SIDE -->
-<div class="left">
+  <!-- LEFT SIDE -->
+  <div class="left">
 
-<h3>Select Year</h3>
+    <h3>Select Year</h3>
 
-<select id="year" onchange="loadFestivals()">
-<option value="2025">2025</option>
-<option value="2026">2026</option>
-</select>
+    <select id="year" onchange="loadFestivals()">
+      <option value="2025">2025</option>
+      <option value="2026">2026</option>
+    </select>
 
-<select id="festival" onchange="loadData()">
-<option>Select Festival</option>
-</select>
+    <select id="festival" onchange="loadData()">
+      <option value="">Select Festival</option>
+    </select>
 
-<h3>Donations</h3>
-<ul id="donations"></ul>
+    <h3>Donations</h3>
+    <ul id="donations"></ul>
 
-<h3>Bills</h3>
-<ul id="bills"></ul>
+    <h3>Bills</h3>
+    <ul id="bills"></ul>
 
-</div>
+  </div>
 
-<!-- RIGHT SIDE -->
-<div class="right">
-<div id="grid" class="grid"></div>
-</div>
+  <!-- RIGHT SIDE -->
+  <div class="right">
+    <div id="grid" class="grid"></div>
+  </div>
 
 </div>
 
 <script>
 
-/* 🔥 MAIN DATA */
+/* =====================================================
+   MAIN DATA
+   ===================================================== */
+
 const data = {
 
-"2025": {
-  "Vinayaka": {
-    items: [
-      {img:"images/p1.jpg.jpg", name:"Jyothish"},
-      {img:"images/p2.jpg.jpg", name:"Kishore"},
-      {img:"images/p3.jpg.jpg", name:"Praveen"},
-      {img:"images/p4.jpg.jpg", name:"Naveen"},
-      {img:"images/p5.jpg.jpg", name:"Umakanth"},
-      {img:"images/p6.jpg.jpg", name:"Kiran"},
-      {img:"images/p7.jpg.jpg", name:"Ambareesh"},
-      {img:"images/p8.jpg.jpg", name:"Mothi"},
-      {img:"images/p9.jpg.jpg", name:"Gokul"},
-      {img:"images/p10.jpg.jpg", name:"Narendra"},
-      {img:"images/p11.jpg.jpg", name:"Thulasi"},
-      {img:"images/p12.jpg.jpg", name:"Sarath"},
-      {img:"images/p13.jpg.jpg", name:"Anji"},
-      {img:"images/p14.jpg.jpg", name:"Nithin"},
-      {img:"images/p15.jpg.jpg", name:"Vinay"},
-      {img:"images/p16.jpg.jpg", name:"K Chandu"},
-      {img:"images/p17.jpg.jpg", name:"Nandu"},
-      {img:"images/p18.jpg.jpg", name:"M Chandu"},
-      {img:"images/p19.jpg.jpg", name:"Goutham"},
-      {img:"images/p20.jpg.jpg", name:"Punith"},
-      {img:"images/p21.jpg.jpg", name:"Yaswanth"},
-      {img:"images/p22.jpg.jpg", name:"T Praveen"},
-      {img:"images/p23.jpg", name:"Jyothish"}
-  
-    ],
-    donations:["Ramesh - ₹700"],
-    bills:["Decoration - ₹800"]
+  "2025": {
+
+    "Vinayaka": {
+
+      items: [
+
+        { img: "images/p1.jpg",  name: "Jyothish" },
+        { img: "images/p2.jpg",  name: "Kishore" },
+        { img: "images/p3.jpg",  name: "Praveen" },
+        { img: "images/p4.jpg",  name: "Naveen" },
+        { img: "images/p5.jpg",  name: "Umakanth" },
+        { img: "images/p6.jpg",  name: "Kiran" },
+        { img: "images/p7.jpg",  name: "Ambareesh" },
+        { img: "images/p8.jpg",  name: "Mothi" },
+        { img: "images/p9.jpg",  name: "Gokul" },
+        { img: "images/p10.jpg", name: "Narendra" },
+        { img: "images/p11.jpg", name: "Thulasi" },
+        { img: "images/p12.jpg", name: "Sarath" },
+        { img: "images/p13.jpg", name: "Anji" },
+        { img: "images/p14.jpg", name: "Nithin" },
+        { img: "images/p15.jpg", name: "Vinay" },
+        { img: "images/p16.jpg", name: "K Chandu" },
+        { img: "images/p17.jpg", name: "Nandu" },
+        { img: "images/p18.jpg", name: "M Chandu" },
+        { img: "images/p19.jpg", name: "Goutham" },
+        { img: "images/p20.jpg", name: "Punith" },
+        { img: "images/p21.jpg", name: "Yaswanth" },
+        { img: "images/p22.jpg", name: "T Praveen" },
+        { img: "images/p23.jpg", name: "Jyothish" }
+
+      ],
+
+      donations: [
+        "Ramesh - ₹700"
+      ],
+
+      bills: [
+        "Decoration - ₹800"
+      ]
+
+    }
+
+  },
+
+  "2026": {
+
+    "Vinayaka": {
+
+      items: [],
+
+      donations: [],
+
+      bills: []
+
+    }
+
   }
-}
 
 };
 
-/* LOAD FESTIVALS */
+
+/* =====================================================
+   LOAD FESTIVALS
+   ===================================================== */
+
 function loadFestivals() {
+
   const year = document.getElementById("year").value;
   const fest = document.getElementById("festival");
 
   fest.innerHTML = "";
 
-  Object.keys(data[year]).forEach(f=>{
-    let opt = document.createElement("option");
-    opt.value = f;
-    opt.text = f;
+  if (!data[year]) {
+    return;
+  }
+
+  const festivals = Object.keys(data[year]);
+
+  if (festivals.length === 0) {
+
+    const opt = document.createElement("option");
+    opt.value = "";
+    opt.textContent = "No Festivals";
     fest.appendChild(opt);
+
+    clearData();
+    return;
+  }
+
+  festivals.forEach(function(festivalName) {
+
+    const opt = document.createElement("option");
+
+    opt.value = festivalName;
+    opt.textContent = festivalName;
+
+    fest.appendChild(opt);
+
   });
 
   loadData();
 }
 
-/* LOAD DATA */
+
+/* =====================================================
+   LOAD DATA
+   ===================================================== */
+
 function loadData() {
 
   const year = document.getElementById("year").value;
   const fest = document.getElementById("festival").value;
 
-  const d = data[year][fest];
-
   const grid = document.getElementById("grid");
+
   grid.innerHTML = "";
 
-  d.items.forEach(item => {
+  if (!year || !fest || !data[year] || !data[year][fest]) {
+    clearData();
+    return;
+  }
 
-    /* 🔥 CARD CREATE */
-    const card = document.createElement("div");
-    card.className = "card";
+  const d = data[year][fest];
 
-    /* IMAGE */
-    const img = document.createElement("img");
-    img.src = item.img;
 
-    /* NAME */
-    const name = document.createElement("p");
-    name.innerText = item.name;
+  /* ===================================================
+     LOAD IMAGES
+     =================================================== */
 
-    /* APPEND */
-    card.appendChild(img);
-    card.appendChild(name);
+  if (d.items && d.items.length > 0) {
 
-    grid.appendChild(card);
+    d.items.forEach(function(item) {
 
-  });
+      /* CARD */
+      const card = document.createElement("div");
+      card.className = "card";
 
-  /* DONATIONS */
+
+      /* IMAGE */
+      const img = document.createElement("img");
+
+      img.src = item.img;
+      img.alt = item.name;
+
+      /*
+       * If image cannot be found,
+       * show a simple placeholder.
+       */
+      img.onerror = function() {
+
+        this.onerror = null;
+
+        this.src =
+          "data:image/svg+xml;charset=UTF-8," +
+          encodeURIComponent(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200">' +
+            '<rect width="100%" height="100%" fill="#ddd"/>' +
+            '<text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" fill="#555" font-size="18">' +
+            'Image Not Found' +
+            '</text>' +
+            '</svg>'
+          );
+
+      };
+
+
+      /* NAME */
+      const name = document.createElement("p");
+
+      name.textContent = item.name;
+
+
+      /* APPEND */
+      card.appendChild(img);
+      card.appendChild(name);
+
+      grid.appendChild(card);
+
+    });
+
+  } else {
+
+    grid.innerHTML =
+      "<p>No photos available for this festival.</p>";
+
+  }
+
+
+  /* ===================================================
+     DONATIONS
+     =================================================== */
+
   const don = document.getElementById("donations");
-  don.innerHTML="";
-  d.donations.forEach(x=>{
-    let li=document.createElement("li");
-    li.innerText=x;
+
+  don.innerHTML = "";
+
+  if (d.donations && d.donations.length > 0) {
+
+    d.donations.forEach(function(item) {
+
+      const li = document.createElement("li");
+
+      li.textContent = item;
+
+      don.appendChild(li);
+
+    });
+
+  } else {
+
+    const li = document.createElement("li");
+
+    li.textContent = "No donations";
+
     don.appendChild(li);
-  });
 
-  /* BILLS */
+  }
+
+
+  /* ===================================================
+     BILLS
+     =================================================== */
+
   const bill = document.getElementById("bills");
-  bill.innerHTML="";
-  d.bills.forEach(x=>{
-    let li=document.createElement("li");
-    li.innerText=x;
+
+  bill.innerHTML = "";
+
+  if (d.bills && d.bills.length > 0) {
+
+    d.bills.forEach(function(item) {
+
+      const li = document.createElement("li");
+
+      li.textContent = item;
+
+      bill.appendChild(li);
+
+    });
+
+  } else {
+
+    const li = document.createElement("li");
+
+    li.textContent = "No bills";
+
     bill.appendChild(li);
-  });
+
+  }
 
 }
+
+
+/* =====================================================
+   CLEAR DATA
+   ===================================================== */
+
+function clearData() {
+
+  document.getElementById("grid").innerHTML = "";
+
+  document.getElementById("donations").innerHTML = "";
+
+  document.getElementById("bills").innerHTML = "";
+
 }
 
-/* DEFAULT LOAD */
-window.onload=()=>{
+
+/* =====================================================
+   DEFAULT LOAD
+   ===================================================== */
+
+window.onload = function() {
+
   loadFestivals();
+
 };
 
 </script>
 
 </body>
 </html>
+```
+
+### Important: your folder must look like this
+
+If you use the updated code above, make sure your files are arranged exactly like this:
+
+```text
+Temple Website/
+│
+├── index.html
+│
+└── images/
+    ├── p1.jpg
+    ├── p2.jpg
+    ├── p3.jpg
+    ├── p4.jpg
+    ├── p5.jpg
+    ├── p6.jpg
+    ├── p7.jpg
+    ├── p8.jpg
+    ├── p9.jpg
+    ├── p10.jpg
+    ├── p11.jpg
+    ├── p12.jpg
+    ├── p13.jpg
+    ├── p14.jpg
+    ├── p15.jpg
+    ├── p16.jpg
+    ├── p17.jpg
+    ├── p18.jpg
+    ├── p19.jpg
+    ├── p20.jpg
+    ├── p21.jpg
+    ├── p22.jpg
+    └── p23.jpg
+```
+
+**One important change:** your original code had `p1.jpg.jpg`, `p2.jpg.jpg`, etc. I changed them to `p1.jpg`, `p2.jpg`, etc. If your actual files really are named `p1.jpg.jpg`, then change the paths back to `.jpg.jpg`.
+
+The **extra `}` after `loadData()` was definitely a code error** and has been removed. The updated version also tells you visually when an image path is incorrect, which makes troubleshooting much easier.
+
+Next, if you want, I can turn this into a **proper temple family website with clickable Families / Festivals / Photos / Videos / Donations / Bills sections and a nicer Telugu design**.
